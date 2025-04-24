@@ -2,7 +2,10 @@ pipeline {
     agent any
     stages {
         stage('Checkout') {
-            steps { git 'https://github.com/michellemontoya/ejemplo-go.git' }
+            steps { 
+                git url: 'https://github.com/michellemontoya/ejemplo-go.git', branch: 'main'
+            }
+            
         }
         stage('Build') {
             steps { sh 'go build .' }
