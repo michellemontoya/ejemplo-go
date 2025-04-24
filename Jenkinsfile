@@ -7,33 +7,37 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Haciendo checkout del repositorio
                 git url: "${GIT_URL}", branch: "${GIT_BRANCH}"
+            }
+        }
+        stage('Check Go Installation') {
+            steps {
+                script {
+                    // Verificar si Go está instalado y en el PATH
+                    def goVersion = sh(script: 'go version', returnStdout: true).trim()
+                    echo "Go Version: ${goVersion}"
+                }
             }
         }
         stage('Build') {
             steps {
-                // Construcción del proyecto Go
-                sh 'go build .'
+                sh 'go build .'  // Compilar el proyecto
             }
         }
         stage('Test') {
             steps {
-                // Ejecutar las pruebas Go
-                sh 'go test -v ./...'  // -v para salida detallada
+                sh 'go test -v ./...'  // Ejecutar pruebas Go
             }
         }
         stage('Clean') {
             steps {
-                // Limpiar caché (opcional)
-                sh 'go clean -cache'
+                sh 'go clean -cache'  // Limpiar caché (opcional)
             }
         }
     }
     post {
         always {
-            // Publicar los resultados de las pruebas si están disponibles en formato XML
-            junit '**/TEST-*.xml'  // Si tienes archivos XML generados por las pruebas
+            // Aquí puedes agregar otros pasos postejecución si es necesario
         }
     }
 }
