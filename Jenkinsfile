@@ -37,7 +37,8 @@ pipeline {
     }
     post {
         always {
-            // Aquí puedes agregar otros pasos postejecución si es necesario
+            // Asegúrate de que haya algo que hacer, como un echo simple
+            echo 'Pipeline completado (sin importar el resultado).'
         }
     }
 }
