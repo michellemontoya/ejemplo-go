@@ -14,14 +14,8 @@ pipeline {
             steps {
                 script {
                     // Verificar si Go está instalado y en el PATH
-                    def goVersion = sh(script: 'which go', returnStdout: true).trim()
-                    if (goVersion) {
-                        echo "Go está instalado en: ${goVersion}"
-                        def goVer = sh(script: 'go version', returnStdout: true).trim()
-                        echo "Go Version: ${goVer}"
-                    } else {
-                        error "Go no está instalado correctamente."
-                    }
+                    def goVersion = sh(script: 'go version', returnStdout: true).trim()
+                    echo "Go version: ${goVersion}"
                 }
             }
         }
