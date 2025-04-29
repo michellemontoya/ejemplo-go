@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'go' }
+    agent { label 'agent3' }
 
     environment {
         GIT_URL = 'https://github.com/michellemontoya/ejemplo-go.git'
@@ -31,9 +31,6 @@ pipeline {
         stage('Test') {
             steps {
                 sh 'go test -v ./...'
-                
-                // Si deseas generar un reporte JUnit en el futuro:
-                // sh 'go test -v ./... | go-junit-report > report.xml'
             }
         }
 
@@ -47,8 +44,6 @@ pipeline {
     post {
         always {
             echo '✅ Pipeline completado (sin importar el resultado).'
-            // publish test report (si lo generas con go-junit-report)
-            // junit 'report.xml'
         }
     }
 }
