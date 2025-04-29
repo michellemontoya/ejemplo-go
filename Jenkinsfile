@@ -16,6 +16,11 @@ pipeline {
         stage('Check Go Installation') {
             steps {
                 script {
+                    // Verificar si Go está en el PATH
+                    def goPath = sh(script: 'echo $PATH', returnStdout: true).trim()
+                    echo "PATH: ${goPath}"
+
+                    // Intentar obtener la versión de Go
                     def goVersion = sh(script: 'go version', returnStdout: true).trim()
                     echo "Go version: ${goVersion}"
                 }
