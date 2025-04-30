@@ -16,6 +16,9 @@ pipeline {
         stage('Check Go Installation') {
             steps {
                 script {
+                    // Asegurarnos de que Go está en el PATH
+                    sh 'export PATH=$PATH:/usr/local/go/bin'  // Asegúrate de que Go esté en el PATH
+
                     // Verificar si Go está en el PATH
                     def goPath = sh(script: 'echo $PATH', returnStdout: true).trim()
                     echo "PATH: ${goPath}"
