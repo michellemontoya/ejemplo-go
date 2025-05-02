@@ -4,6 +4,7 @@ pipeline {
     environment {
         GIT_URL = 'https://github.com/michellemontoya/ejemplo-go.git'
         GIT_BRANCH = 'main'
+        GO_BIN = '/usr/local/go/bin/go'
     }
 
     stages {
@@ -16,15 +17,7 @@ pipeline {
         stage('Check Go Installation') {
             steps {
                 script {
-                    // Asegurarnos de que Go está en el PATH
-                    sh 'export PATH=$PATH:/usr/local/go/bin'  // Asegúrate de que Go esté en el PATH
-
-                    // Verificar si Go está en el PATH
-                    def goPath = sh(script: 'echo $PATH', returnStdout: true).trim()
-                    echo "PATH: ${goPath}"
-
-                    // Intentar obtener la versión de Go
-                    def goVersion = sh(script: 'go version', returnStdout: true).trim()
+                    def goVersion = sh(script: "${GO_BIN} version", returnStdout: true).trim()
                     echo "Go version: ${goVersion}"
                 }
             }
@@ -32,19 +25,19 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'go build .'
+                sh '${GO_BIN} build .'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'go test -v ./...'
+                sh '${GO_BIN} test -v ./...'
             }
         }
 
         stage('Clean') {
             steps {
-                sh 'go clean -cache'
+                sh '${GO_BIN} clean -cache'
             }
         }
     }
